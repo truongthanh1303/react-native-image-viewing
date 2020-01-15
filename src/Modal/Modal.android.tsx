@@ -7,7 +7,13 @@
  */
 
 import React, { useEffect } from "react";
-import { BackHandler, View, StyleSheet, StatusBar } from "react-native";
+import {
+  BackHandler,
+  View,
+  StyleSheet,
+  StatusBar,
+  Modal,
+} from "react-native";
 
 type Props = {
   visible: boolean;
@@ -16,7 +22,7 @@ type Props = {
   onRequestClose: () => void;
 };
 
-const Modal = ({ visible, children, onRequestClose }: Props) => {
+const _Modal = ({ visible, children, onRequestClose }: Props) => {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -34,7 +40,11 @@ const Modal = ({ visible, children, onRequestClose }: Props) => {
     };
   }, []);
 
-  return <>{visible && <View style={styles.root}>{children}</View>}</>;
+  return <>{visible && 
+    <Modal visible={visible} transparent={true}>
+      <View style={styles.root}>{children}</View>
+    </Modal>
+  }</>;
 };
 
 const styles = StyleSheet.create({
@@ -42,8 +52,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     zIndex: 1000,
     backgroundColor: "transparent",
-    top: StatusBar.currentHeight
   }
 });
 
-export default Modal;
+export default _Modal;
