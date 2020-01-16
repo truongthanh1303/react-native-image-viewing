@@ -9,9 +9,8 @@
 import React, { useEffect } from "react";
 import {
   BackHandler,
-  View,
+  SafeAreaView,
   StyleSheet,
-  StatusBar,
   Modal,
 } from "react-native";
 
@@ -31,7 +30,7 @@ const _Modal = ({ visible, children, onRequestClose }: Props) => {
           onRequestClose();
         }
 
-        return true;
+        return visible;
       }
     );
 
@@ -42,7 +41,7 @@ const _Modal = ({ visible, children, onRequestClose }: Props) => {
 
   return <>{visible && 
     <Modal visible={visible} transparent={true}>
-      <View style={styles.root}>{children}</View>
+      <SafeAreaView style={styles.root}>{children}</SafeAreaView>
     </Modal>
   }</>;
 };

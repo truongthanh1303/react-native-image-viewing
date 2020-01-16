@@ -6,14 +6,14 @@
  *
  */
 import React, { useEffect } from "react";
-import { BackHandler, View, StyleSheet, Modal, } from "react-native";
+import { BackHandler, SafeAreaView, StyleSheet, Modal, } from "react-native";
 const _Modal = ({ visible, children, onRequestClose }) => {
     useEffect(() => {
         const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
             if (typeof onRequestClose === "function") {
                 onRequestClose();
             }
-            return true;
+            return visible;
         });
         return () => {
             backHandler.remove();
@@ -21,7 +21,7 @@ const _Modal = ({ visible, children, onRequestClose }) => {
     }, []);
     return <>{visible &&
         <Modal visible={visible} transparent={true}>
-      <View style={styles.root}>{children}</View>
+      <SafeAreaView style={styles.root}>{children}</SafeAreaView>
     </Modal>}</>;
 };
 const styles = StyleSheet.create({
